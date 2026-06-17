@@ -36,15 +36,21 @@ bluestock_mf_capstone/
 │   ├── 04_performance_analytics.ipynb
 │   └── 05_advanced_analytics.ipynb
 ├── scripts/
-│   ├── etl_pipeline.py        ← Master ETL script (run this first)
-│   ├── live_nav_fetch.py      ← Fetches live NAV from mfapi.in
-│   ├── compute_metrics.py     ← Sharpe, Sortino, Alpha, Beta, VaR
-│   └── recommender.py         ← Fund recommender by risk grade
+│   ├── run_pipeline.py        ← Master ETL orchestration script
+│   ├── data_ingestion.py
+│   ├── data_cleaning.py
+│   ├── create_database.py
+│   ├── load_data.py
+│   ├── validate_amfi.py
+│   ├── live_nav_fetch.py
+│   ├── multi_nav_fetch.py
+│   ├── recommender.py
+│   └── dev_utils/
 ├── sql/
 │   ├── schema.sql             ← CREATE TABLE statements
 │   └── queries.sql            ← 10 analytical SQL queries
 ├── dashboard/
-│   └── bluestock_mf_dashboard.pbix   ← Power BI dashboard
+│   └── PowerBI_Dashboard.pbix   ← Power BI dashboard
 ├── reports/
 │   ├── Final_Report.pdf
 │   └── Bluestock_MF_Presentation.pptx
@@ -85,8 +91,10 @@ jupyter
 ```
 
 ### 3. Run the ETL pipeline
+The master script run_pipeline.py orchestrates data ingestion,
+data cleaning, validation and loading into SQLite.
 ```bash
-python scripts/etl_pipeline.py
+python scripts/run_pipeline.py
 ```
 This will:
 - Load all 10 CSV datasets from `data/raw/`

@@ -1,18 +1,11 @@
-import pandas as pd
-from sqlalchemy import create_engine
+import sqlite3
 
-engine = create_engine("sqlite:///bluestock_mf.db")
+conn = sqlite3.connect("bluestock_mf.db")
 
-test_df = pd.DataFrame({
-    "id": [1],
-    "name": ["test"]
-})
+with open("sql/schema.sql", "r") as f:
+    conn.executescript(f.read())
 
-test_df.to_sql(
-    "test_table",
-    engine,
-    if_exists="replace",
-    index=False
-)
+conn.commit()
+conn.close()
 
-print("Database and test table created successfully!")
+print("Database schema created successfully!")
